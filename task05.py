@@ -12,7 +12,7 @@ class Budget:
 
         if json_path:
             with open(json_path, "r") as json_file:
-                 data:dict = json.loads(json_file)
+                 data:dict = json.loads(json_file.read())
             if "transactions" not in data.keys():
                 raise ValueError
             if type(data["transactions"]) != list:
