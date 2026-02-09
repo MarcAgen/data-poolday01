@@ -46,7 +46,7 @@ class Budget:
         if category != None:
             print(f"[{i}]")
             for i in self._transactions[f"{category}"]:
-                print(f"You spent {i:.2f} euros" if (i < 0) else f"You received {i:.2d} euros")
+                print(f"You spent {abs(i):.2f} euros" if (i < 0) else f"You received {i:.2d} euros")
                 print("")
         else:
             for i in self._transactions.keys():
@@ -57,7 +57,7 @@ class Budget:
         if category != None:
             print(f"[{i}]")
             for i in sorted(self._transactions[f"{category}"]):
-                print(f"You spent {i:.2f} euros" if (i < 0) else f"You received {i:.2d} euros")
+                print(f"You spent {abs(i):.2f} euros" if (i < 0) else f"You received {i:.2d} euros")
                 print("")
         else:
             for i in sorted(self._transactions.keys()):
