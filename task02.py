@@ -1,12 +1,13 @@
 ##
 ## EPITECH PROJECT, 2026
-## day01
+## data-poolday01
 ## File description:
-## task01
+## task02
 ##
 
-def print_transactions(lst: list[int | float]) -> None:
-    for i in lst:
+def print_sorted_transactions(lst: list[int | float]) -> None:
+    for i in sorted(lst):
         if i == 0:
             continue
         print(f"You spent {i:.2f} euros\n" if (i < 0) else f"You received {i:.2d} euros\n")
+
