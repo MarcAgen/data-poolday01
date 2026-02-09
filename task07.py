@@ -5,6 +5,7 @@
 ## task04
 ##
 import json
+import sys
 
 class Budget:
     def __init__(self, json_path:str = None)->None:
@@ -110,4 +111,6 @@ def cli(path:str)->None:
         else:
             print("Invalid choice")
 
-cli("./test.json")
+if __name__ == "__main__":
+    cli(sys.argv[-1])
+
