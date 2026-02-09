@@ -7,12 +7,12 @@
 import json
 
 class Budget:
-    def __init__(self, json_path = None)->None:
-        self._transactions:dict[str, list[int | float]] = {"income":[], "misc":[], "transportation":[]}
+    def __init__(self, json_path:str = None)->None:
+        self._transactions:dict[str, list[int | float]]
 
         if json_path:
             with open(json_path, "r") as json_file:
-                 data:dict = json.loads(json_file.read())
+                data:dict = json.loads(json_file.read())
             if "transactions" not in data.keys():
                 raise ValueError
             if type(data["transactions"]) != list:
@@ -20,7 +20,7 @@ class Budget:
             for i in data["transactions"]:
                 if type(i) != dict:
                     raise ValueError
-            if "category" not in data.keys() or "values" not in data.keys():
+            if "category" not in data.keys() or "values" not in data.keys()():
                 raise ValueError
             if type(data["transactions"]["values"]) != list[int | float] or type(data["transactions"]["category"]) != str:
                 raise ValueError
@@ -63,11 +63,49 @@ class Budget:
             for i in sorted(self._transactions.keys()):
                 self.print_transactions(i)
 
+
     def save_transactions(self, output_path: str):
         with open(output_path, "w") as f:
-            f.write("{\n\t\" transaction \": [\n")
+            f.write("{\n\t\"transaction\": [\n")
             for i in range (len(self._transactions.keys())):
                 if self._transactions[f"{self._transactions.keys()[i]}"] == []:
                     continue
                 f.write("\t\t " + "{" + f" \" category \": \" {self._transactions.keys()[i]} \", \" values \": {self._transactions[f"{self._transactions.keys()[i]}"]} " + "},\n")
             f.write("\t]\n}")
+
+
+def cli(path:str)->None:
+    cli_budget:Budget = Budget(path)
+    choice:str = None
+
+    while True:
+        choice = input("Choose between:\n1 - consult my balance\n2 - add new transaction\n3 - consult your transactions history\n4 - quit\n>")
+        if choice in ["1", "2", "3", "4"]:
+            match choice:
+                case "1":
+                    var:int = 0
+                    for i in cli_budget._transactions.keys():
+                        var += sum(cli_budget._transactions[f"{i}"])
+                    print(f"Balance: {var:.2f} euros")
+                case "2":
+                    category:str = input("Category :")
+                    value:str = input("Value :")
+                    if not category:
+                        print("Invalid category")
+                        continue
+                    if not value.isnumeric:
+                        print("Invalid value")
+                        continue
+                    cli_budget.add_transactions([int(value)], category)
+                    print("Transaction added")
+                case "3":
+                    if not cli_budget._transactions:
+                        print("No transactions")
+                        continue
+                    cli_budget.print_transactions()
+                case "4":
+                    cli_budget.save_transactions(path)
+                    return
+        print("Invalid choice")
+
+cli("./test.json")

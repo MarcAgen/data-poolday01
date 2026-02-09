@@ -13,7 +13,6 @@ class Budget:
         for i in lst:
             if i != 0:
                 self._transactions.append(i)
-    
     def print_transactions(self):
         for i in self._transactions:
             if i == 0:
