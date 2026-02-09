@@ -1,6 +1,6 @@
 {
-    " transactions " : [
-        { " category " : " income " , " values " : [1 , 42.08 , 2] } ,
-        { " category " : " transportation " , " values " : [ -1] }
+    "transactions" : [
+        { "category" : "income" , "values" : [1 , 42.08 , 2] } ,
+        { "category" : "transportation" , "values" : [ -1] }
     ]
 }

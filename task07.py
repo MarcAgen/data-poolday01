@@ -8,8 +8,7 @@ import json
 
 class Budget:
     def __init__(self, json_path:str = None)->None:
-        self._transactions:dict[str, list[int | float]]
-
+        self._transactions:dict[str, list[int | float]] = {}
         if json_path:
             with open(json_path, "r") as json_file:
                 data:dict = json.loads(json_file.read())
@@ -20,10 +19,12 @@ class Budget:
             for i in data["transactions"]:
                 if type(i) != dict:
                     raise ValueError
-            if "category" not in data.keys() or "values" not in data.keys()():
-                raise ValueError
-            if type(data["transactions"]["values"]) != list[int | float] or type(data["transactions"]["category"]) != str:
-                raise ValueError
+            for i in data["transactions"]:
+                if "category" not in i or "values" not in i:
+                    raise ValueError
+            for i in data["transactions"]:
+                if type(i["category"]) != str or not all(isinstance(x, int | float) for x in i["values"]):
+                    raise ValueError
         for i in data["transactions"]:
             self.add_transactions(i["values"], i["category"])
 
@@ -70,7 +71,7 @@ class Budget:
             for i in range (len(self._transactions.keys())):
                 if self._transactions[f"{self._transactions.keys()[i]}"] == []:
                     continue
-                f.write("\t\t " + "{" + f" \" category \": \" {self._transactions.keys()[i]} \", \" values \": {self._transactions[f"{self._transactions.keys()[i]}"]} " + "},\n")
+                f.write("\t\t " + "{" + f" \"category\": \"{self._transactions.keys()[i]}\", \"values\": {self._transactions[f"{self._transactions.keys()[i]}"]} " + "},\n")
             f.write("\t]\n}")
 
 
@@ -105,7 +106,8 @@ def cli(path:str)->None:
                     cli_budget.print_transactions()
                 case "4":
                     cli_budget.save_transactions(path)
-                    return
-        print("Invalid choice")
+                    return 0
+        else:
+            print("Invalid choice")
 
 cli("./test.json")

@@ -8,8 +8,8 @@ import json
 
 class Budget:
     def __init__(self, json_path = None)->None:
-        self._transactions:dict[str, list[int | float]] = {"income":[], "misc":[], "transportation":[]}
-
+        self._transactions:list[dict[str, list[int | float]]] = {"income":[], "misc":[], "transportation":[]}
+        data:dict[list[dict[str, int | float]]]
         if json_path:
             with open(json_path, "r") as json_file:
                  data:dict = json.loads(json_file.read())
@@ -20,10 +20,12 @@ class Budget:
             for i in data["transactions"]:
                 if type(i) != dict:
                     raise ValueError
-            if "category" not in data.keys() or "values" not in data.keys():
-                raise ValueError
-            if type(data["transactions"]["values"]) != list[int | float] or type(data["transactions"]["category"]) != str:
-                raise ValueError
+            for i in data["transactions"]:
+                if "category" not in i or "values" not in i:
+                    raise ValueError
+            for i in data["transactions"]:
+                if type(i["category"]) != str or not all(isinstance(x, int | float) for x in i["values"]):
+                    raise ValueError
         self.add_transactions(data["transactions"])
             
     def get_categories(self)->list[str]:
