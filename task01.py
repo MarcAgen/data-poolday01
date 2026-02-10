@@ -10,5 +10,3 @@ def print_transactions(lst: list[int | float]) -> None:
         if i == 0:
             continue
         print(f"You spent {abs(i):.2f} euros" if (i < 0) else f"You received {i:.2f} euros")
-
-print_transactions([10, 2.04, -40])
