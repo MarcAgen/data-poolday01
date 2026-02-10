@@ -9,5 +9,5 @@ def print_sorted_transactions(lst: list[int | float]) -> None:
     for i in sorted(lst):
         if i == 0:
             continue
-        print(f"You spent {abs(i):.2f} euros" if (i < 0) else f"You received {i:.2d} euros")
+        print(f"You spent {abs(i):.2f} euros" if (i < 0) else f"You received {i:.2f} euros")
 

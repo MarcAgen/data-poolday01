@@ -30,11 +30,11 @@ class Budget:
         for i in self._transactions:
             if i == 0:
                 continue
-            print(f"You spent {abs(i):.2f} euros" if (i < 0) else f"You received {i:.2d} euros")
+            print(f"You spent {abs(i):.2f} euros" if (i < 0) else f"You received {i:.2f} euros")
 
     def print_sorted_transactions(self):
         for i in sorted(self._transactions):
             if i == 0:
                 continue
-            print(f"You spent {abs(i):.2f} euros" if (i < 0) else f"You received {i:.2d} euros")
+            print(f"You spent {abs(i):.2f} euros" if (i < 0) else f"You received {i:.2f} euros")
 
